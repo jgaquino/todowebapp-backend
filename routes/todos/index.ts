@@ -1,21 +1,28 @@
 import express, { NextFunction, Request, Response } from "express";
+import { RequestWithUser } from "../../authentication/RequestWithUser";
 import Todo from "../../models/Todo";
 const router = express.Router();
 
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const todos = await Todo.find();
-    res.json(todos);
-  } catch (error) {
-    next(error);
+router.get(
+  "/",
+  async (req: RequestWithUser, res: Response, next: NextFunction) => {
+    try {
+      const todos = await Todo.find({ owner: req.user.email });
+      res.json(todos);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.put(
   "/create",
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: RequestWithUser, res: Response, next: NextFunction) => {
     try {
-      const newTodo = await new Todo(req.body).save();
+      const newTodo = await new Todo({
+        ...req.body,
+        owner: req.user.email,
+      }).save();
       res.json(newTodo.toObject());
     } catch (error) {
       next(error);
@@ -25,7 +32,7 @@ router.put(
 
 router.delete(
   "/delete/:id",
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: RequestWithUser, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;
       const response = await Todo.deleteOne({ id });
@@ -39,10 +46,13 @@ router.delete(
 );
 router.patch(
   "/mark-completed/:id",
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: RequestWithUser, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;
-      const response = await Todo.updateOne({ id }, { completed: true });
+      const response = await Todo.updateOne(
+        { id, owner: req.user.email },
+        { completed: true }
+      );
       if (response.matchedCount !== 1)
         throw new Error("Sorry, can't mark as completed");
       res.json({ completed: true });
@@ -53,10 +63,13 @@ router.patch(
 );
 router.patch(
   "/mark-uncompleted/:id",
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: RequestWithUser, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;
-      const response = await Todo.updateOne({ id }, { completed: false });
+      const response = await Todo.updateOne(
+        { id, owner: req.user.email },
+        { completed: false }
+      );
       if (response.matchedCount !== 1)
         throw new Error("Sorry, can't mark as uncompleted");
       res.json({ completed: false });

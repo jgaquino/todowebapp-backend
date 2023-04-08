@@ -5,6 +5,11 @@ import connectMongoDb from "./db/connectMongoDb";
 import todosRoutes from "./routes/todos";
 import handle404 from "./configs/handle404";
 import handleErrors from "./configs/handleErrors";
+
+import signup from "./authentication/signup";
+import login from "./authentication/login";
+import verifyToken from "./authentication/verifyToken";
+
 const port = 4000;
 const app = express();
 
@@ -15,8 +20,12 @@ const app = express();
   // Create application/json parser
   app.use(bodyParser.json());
 
+  // User authentication
+  app.post("/signup", signup);
+  app.post("/login", login);
+
   // Todos API
-  app.use("/todos", todosRoutes);
+  app.use("/todos", verifyToken, todosRoutes);
 
   // 404
   app.use(handle404);

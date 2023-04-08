@@ -6,7 +6,9 @@ const handleErrors = (
   res: Response,
   next: NextFunction
 ) => {
-  res.status(500).json({ error: err.message });
+  if (err.message === "access-denied")
+    return res.status(403).json({ error: err.message });
+  return res.status(500).json({ error: err.message });
 };
 
 export default handleErrors;

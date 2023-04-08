@@ -8,6 +8,7 @@ const Todo = new Schema<ITodo>({
   },
   title: String,
   completed: Boolean,
+  owner: String,
 });
 
 export default model<ITodo>("Todo", Todo);
