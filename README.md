@@ -23,9 +23,9 @@
 
 ### Folder Structure
 
-`authentication`: User authentication module
-`configs`: Custom express Middlewares
-`db`: MongoDB connection
-`entities`: App entities (Typescript interfaces)
-`models`: Mongoose models
+`authentication`: User authentication module  
+`configs`: Custom express Middlewares  
+`db`: MongoDB connection  
+`entities`: App entities (Typescript interfaces)  
+`models`: Mongoose models  
 `routes`: Todo enpoints
