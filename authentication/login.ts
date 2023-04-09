@@ -4,6 +4,7 @@ import { IUser } from "../entities/User";
 import Joi from "@hapi/joi";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import JWT_SECRET_STRING from "./JWT_SECRET_STRING";
 
 const schemaLogin = Joi.object({
   email: Joi.string().min(6).max(255).required().email(),
@@ -26,7 +27,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 
     const token = jwt.sign(
       { fullname: user.fullname, email: user.email },
-      "MY_JWT_SECRET_STRING"
+      JWT_SECRET_STRING
     );
     return res.json(token);
   } catch (error) {

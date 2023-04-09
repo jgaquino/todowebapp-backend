@@ -11,7 +11,4 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "files": [
-    "custom.d.ts",
-  ]
 }
