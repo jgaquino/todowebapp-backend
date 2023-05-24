@@ -4,7 +4,6 @@ import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import Joi from "@hapi/joi";
 import jwt from "jsonwebtoken";
-import JWT_SECRET_STRING from "../../authentication/JWT_SECRET_STRING";
 
 const schemaRegister = Joi.object({
   fullname: Joi.string().min(6).max(30).required(),
@@ -28,7 +27,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
 
     const token = jwt.sign(
       { fullname: savedUser.fullname, email: savedUser.email },
-      JWT_SECRET_STRING
+      process.env.JWT_SECRET_STRING as string
     );
 
     return res.json(token);

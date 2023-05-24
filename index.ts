@@ -1,4 +1,5 @@
 import express from "express";
+import "./configs/envVariables";
 import cors from "cors";
 import bodyParser from "body-parser";
 import connectMongoDb from "./db/connectMongoDb";
