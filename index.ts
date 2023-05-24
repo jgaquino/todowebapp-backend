@@ -23,7 +23,6 @@ const app = express();
   // User authentication
   app.post("/signup", signup);
   app.post("/login", login);
-
   // Todos API
   app.use("/todos", verifyToken, todosRoutes);
 
