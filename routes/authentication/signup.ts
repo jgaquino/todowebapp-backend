@@ -1,10 +1,10 @@
-import User from "../models/User";
-import { IUser } from "../entities/User";
+import User from "../../models/User";
+import { IUser } from "../../entities/User";
 import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import Joi from "@hapi/joi";
 import jwt from "jsonwebtoken";
-import JWT_SECRET_STRING from "./JWT_SECRET_STRING";
+import JWT_SECRET_STRING from "../../authentication/JWT_SECRET_STRING";
 
 const schemaRegister = Joi.object({
   fullname: Joi.string().min(6).max(30).required(),

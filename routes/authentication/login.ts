@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import User from "../models/User";
-import { IUser } from "../entities/User";
+import User from "../../models/User";
+import { IUser } from "../../entities/User";
 import Joi from "@hapi/joi";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import JWT_SECRET_STRING from "./JWT_SECRET_STRING";
+import JWT_SECRET_STRING from "../../authentication/JWT_SECRET_STRING";
 
 const schemaLogin = Joi.object({
   email: Joi.string().min(6).max(255).required().email(),

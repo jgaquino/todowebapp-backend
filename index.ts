@@ -2,12 +2,12 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import connectMongoDb from "./db/connectMongoDb";
-import todosRoutes from "./routes/todos";
 import handle404 from "./configs/handle404";
 import handleErrors from "./configs/handleErrors";
 
-import signup from "./authentication/signup";
-import login from "./authentication/login";
+import todosRoutes from "./routes/todos";
+import signup from "./routes/authentication/signup";
+import login from "./routes/authentication/login";
 import verifyToken from "./authentication/verifyToken";
 
 const port = 4000;
@@ -20,7 +20,7 @@ const app = express();
   // Create application/json parser
   app.use(bodyParser.json());
 
-  // User authentication
+  // User authentication API
   app.post("/signup", signup);
   app.post("/login", login);
   // Todos API
